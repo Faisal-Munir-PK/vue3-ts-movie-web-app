@@ -1,14 +1,10 @@
 <template>
-    <div class="text-white px-6 py-3 border-0 rounded relative top-16 z-50 h-14 animate-bounce" v-if="Toast.isActive"
-        :class="{ 'bg-red-500': Toast.isError, 'bg-green-500': Toast.isSuccess }">
-        <span class="inline-block align-middle mr-8">
-            <i class="fas fa-times"></i>
+    <div class="text-white px-6 py-3 border-0 rounded absolute top-16 right-0 z-50 h-14 animate-bounce w-auto flex flex-row"
+        v-if="Toast.isActive" :class="{ 'bg-red-500': Toast.isError, 'bg-green-500': Toast.isSuccess }">
+        <span class="inline-block align-middle w-full mr-20">
+            <b class="capitalize">Error:</b> {{ Toast.message }}
         </span>
-        <span class="inline-block align-middle">
-            <b class="capitalize">Error:</b> {{ Toast.message }}.
-        </span>
-        <button class="absolute bottom-0 right-0 mb-4 mr-6 text-white font-bold uppercase" @click="handleToast()">
-            <span>Close</span>
+        <button class="absolute bottom-0 right-0 mb-5 mr-6 text-white font-bold uppercase" @click="handleToast()">
             <span class="ml-2">&times;</span>
         </button>
     </div>
@@ -21,7 +17,11 @@ const Toast = computed(() => {
 })
 const closeToast = ref(false)
 const handleToast = () => {
-    store.commit('SET_TOAST', "")
+    store.commit('SET_TOAST', {
+        isActive: false,
+        message: "",
+        isError: false
+    })
 }
 onMounted(() => {
     setTimeout(() => {

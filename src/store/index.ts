@@ -31,19 +31,21 @@ export default createStore({
     },
   },
   mutations: {
-    SET_MOVIES(state: any, payload: any) {
+    SET_MOVIES(state: IState, payload: any) {
       state.movies = payload["Search"];
     },
-    SET_MOVIE(state: any, payload: any) {
+    SET_MOVIE(state: IState, payload: any) {
       state.movie = payload;
     },
-    SET_TOAST(state: any, payload: string) {
+    SET_TOAST(
+      state: IState,
+      payload: { isActive: boolean; message: string; isError: boolean }
+    ) {
       state.toast = {
-        isActive: payload.length > 0 ? true :false,
-        message: payload,
-        isError: payload.length > 0 ? true :false,
+        isActive: payload.isActive,
+        message: payload.message,
+        isError: payload.isError,
       };
-      console.warn("MUTATION state.toast", state.toast);
     },
   },
   actions: {
@@ -59,12 +61,20 @@ export default createStore({
         })
         .then((response: AxiosResponse) => {
           if (response.data.hasOwnProperty("Error"))
-            commit("SET_TOAST", response.data.Error);
+            commit("SET_TOAST", {
+              isActive: true,
+              message: response.data.Error,
+              isError: true,
+            });
 
           commit("SET_MOVIES", response.data);
         })
         .catch((error: AxiosError) => {
-          commit("SET_TOAST", error);
+          commit("SET_TOAST", {
+            isActive: true,
+            message: error,
+            isError: true,
+          });
         });
     },
     async searchMovie({ commit }, title) {
@@ -78,12 +88,20 @@ export default createStore({
         })
         .then((response: AxiosResponse) => {
           if (response.data.hasOwnProperty("Error"))
-            commit("SET_TOAST", response.data.Error);
+            commit("SET_TOAST", {
+              isActive: true,
+              message: response.data.Error,
+              isError: true,
+            });
 
           commit("SET_MOVIES", response.data);
         })
         .catch((error: AxiosError) => {
-          commit("SET_TOAST", error);
+          commit("SET_TOAST", {
+            isActive: true,
+            message: error,
+            isError: true,
+          });
         });
     },
     async searchMovieByTitle({ commit }, title) {
@@ -96,15 +114,23 @@ export default createStore({
         })
         .then((response: AxiosResponse) => {
           if (response.data.hasOwnProperty("Error"))
-            commit("SET_TOAST", response.data.Error);
+            commit("SET_TOAST", {
+              isActive: true,
+              message: response.data.Error,
+              isError: true,
+            });
 
           commit("SET_MOVIE", response.data);
         })
         .catch((error: AxiosError) => {
-          commit("SET_TOAST", error);
+          commit("SET_TOAST", {
+            isActive: true,
+            message: error,
+            isError: true,
+          });
         });
     },
   },
   modules: {},
-  // plugins: [createPersistedState()],
+  plugins: [createPersistedState()],
 });

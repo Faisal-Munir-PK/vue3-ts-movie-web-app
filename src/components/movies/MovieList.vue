@@ -1,5 +1,5 @@
 <template>
-    <div class="relative overflow-hidden min-h-screen">
+    <div class="relative overflow-hidden min-h-screen mt-10">
         <toast />
         <div class="absolute inset-0 z-0">
             <img src="../../assets/landing-background2.jpeg" alt="Background" class="w-full h-full object-cover" />
@@ -26,8 +26,10 @@
             </form>
             <h2 class="text-2xl font-bold text-white mb-6">Featured Movies</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                <MovieCard v-if="movies" v-for="movie in movies" :key="movie.id" :movie="movie" @click:openModal="openModal(movie)" />
-                <span class="text-2xl font-bold text-yellow-300 mb-6 animate-pulse" v-else> No movies to display. Search again.</span>
+                <MovieCard v-if="movies" v-for="movie in movies" :key="movie.id" :movie="movie"
+                    @click:openModal="openModal(movie)" />
+                <span class="text-2xl font-bold text-yellow-300 mb-6 animate-pulse" v-else> No movies to display. Search
+                    again.</span>
             </div>
             <Pagination v-if="movies" class="mt-2" :totalItems="movies.length" :itemsPerPage="5" :currentPage="1"
                 @changePage="changePage($event)" />
@@ -77,6 +79,7 @@ const changePage = (e: any) => {
 }
 
 onMounted(() => {
-    store.dispatch('fetchMovies')
+    if (movies.value.length === 0)
+        store.dispatch('fetchMovies')
 })
 </script>

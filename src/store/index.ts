@@ -51,10 +51,10 @@ export default createStore({
   actions: {
     async fetchMovies({ commit }, page: number = 1) {
       await axios
-        .get("http://www.omdbapi.com/", {
+        .get("https://www.omdbapi.com/", {
           params: {
             i: "tt3896198",
-            s: "latest",
+            s: "batman",
             page: page,
             apiKey: "d1a0c4a6",
           },
@@ -79,7 +79,7 @@ export default createStore({
     },
     async searchMovie({ commit }, title) {
       await axios
-        .get("http://www.omdbapi.com/", {
+        .get("https://www.omdbapi.com/", {
           params: {
             s: title,
             page: 1,
@@ -106,7 +106,7 @@ export default createStore({
     },
     async searchMovieByTitle({ commit }, title) {
       await axios
-        .get("http://www.omdbapi.com/", {
+        .get("https://www.omdbapi.com/", {
           params: {
             t: title,
             apiKey: "d1a0c4a6",

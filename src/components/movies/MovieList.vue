@@ -6,7 +6,16 @@
             <div class="absolute inset-0 bg-black opacity-50"></div>
         </div>
         <div class="relative z-10 px-6 py-12 md:px-16 lg:px-24 xl:px-32">
-            <h1 class="text-4xl font-bold text-white leading-tight mb-8">Discover Your Next Favorite Movie</h1>
+            <div class="flex justify-between">
+                <div class="order-first">
+                    <h1 class="text-4xl font-bold text-white leading-tight mb-8">Discover Your Next Favorite Movie</h1>
+                </div>
+                <div class="order-last">
+                    <social-media-links />
+                </div>
+            </div>
+            <Genre @click:genre="onGenreSelection($event)" class="sm:hidden" />
+            <br>
             <form class="max-w-lg mx-auto mb-8">
                 <div class="relative shadow-2xl">
                     <input type="text" class="w-full py-4 pl-12 pr-4 rounded-lg bg-white text-gray-800 shadow"
@@ -55,15 +64,14 @@
                     </div>
                 </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-16">
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
                 <MovieCard v-if="movies" v-for="movie in movies" :key="movie.id" :movie="movie"
                     @click:openModal="openModal(movie)" />
                 <span class="text-2xl font-bold text-yellow-300 mb-6 animate-pulse" v-else> No movies to display. Search
                     again.</span>
             </div>
-            <Pagination v-if="movies" class="mt-2" :totalItems="movies.length" :itemsPerPage="5" :currentPage="1"
+            <Pagination v-if="movies" class="mt-2" :totalItems="50" :itemsPerPage="5" :currentPage="1"
                 @changePage="changePage($event)" />
-            <Genre @click:genre="onGenreSelection($event)" />
         </div>
         <MovieDetailsModal class="mt-24" :isOpen="isModalOpen" :movieDetails="movieDetails" @onClose="closeModal" />
     </div>
@@ -75,9 +83,8 @@ import { Genre } from "@/components/Filters"
 import { MovieDetailsModal } from ".";
 import store from '@/store';
 import { IMovie } from "@/types/movie";
-import { Pagination } from "@/components/";
-import { Toast } from '@/components';
-import { MovieCard } from "@/components/card"
+import { Pagination, SocialMediaLinks, Toast } from "@/components/";
+import { MovieCard } from "@/components/card";
 const isModalOpen = ref<boolean>(false);
 const movies = computed(() => {
     return store.getters.getMovies

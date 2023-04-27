@@ -23,6 +23,7 @@ export interface IMovie {
   Website?: string;
   Respionse?: boolean;
   Runtime?: string;
+  Images?: string[]
 }
 export interface IRating {
   Source: string;

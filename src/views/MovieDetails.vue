@@ -1,5 +1,5 @@
 <template>
-    <div class="absolute mt-6 inset-0 bg-fixed bg-cover h-screen "
+    <div class="absolute mt-6 inset-0 bg-fixed bg-cover h-screen"
         :style="{ backgroundImage: `url(${movieDetails.Poster})` }">
         <div class="absolute inset-0 bg-gray-900 bg-opacity-80 backdrop-blur"></div>
         <div class="relative z-10 container mx-auto py-16">
@@ -10,27 +10,41 @@
                 </div>
                 <div class="md:w-3/5 md:pl-8 mt-8 md:mt-0 text-white px-5">
                     <h1 class="text-4xl font-bold mb-4">{{ movieDetails.Title }}</h1>
-                    <div class="flex mb-4 ">
-                        <div class="bg-green-500 text-white px-4 py-2 rounded-lg"
+                    <div class="flex mb-4">
+                        <div class="bg-green-500 text-white px-4 py-2 rounded-lg mr-3"
                             v-for="rating, index in movieDetails.Ratings" :key="index">
-                            <span>{{ rating.Value }}</span>
+                            <span :title="rating.Source">
+                                <p class="text-lg">{{ rating.Value }}</p>
+                                <small class="text-xs">{{ rating.Source }}</small>
+                            </span>
                         </div>
-                        <div class="text-white px-4">{{ movieDetails.Year }}</div>
-                        <div class="text-white">{{ movieDetails.Runtime }}</div>
+                        <div class="text-white px-4">
+                            <div class="font-bold mb-2">Released in</div>
+                            <div>
+                                {{ movieDetails.Year }}
+                            </div>
+                        </div>
+                        <div class="text-white">
+                            <div class="font-bold mb-2">Run Time</div>
+                            <div>
+                                {{ movieDetails.Runtime }}
+                            </div>
+                        </div>
                     </div>
                     <div class="text-white mb-4">
-                        <span v-for="(genre, index) in movieDetails.Genre" :key="index">
-                            {{ genre.name }}
-                            <span v-if="index < movieDetails.Genre.length - 1" class="mx-2">|</span>
-                        </span>
+                        <div class="font-bold mb-2">Genre</div>
+                        <div>{{ movieDetails.Genre }}</div>
                     </div>
-                    <div class="text-white mb-4">{{ movieDetails.Plot }}</div>
                     <div class="text-white mb-4">
-                        <div class="font-bold mb-2">Writer:</div>
+                        <div class="font-bold mb-2">Plot</div>
+                        <div>{{ movieDetails.Plot }}</div>
+                    </div>
+                    <div class="text-white mb-4">
+                        <div class="font-bold mb-2">Writer</div>
                         <div>{{ movieDetails.Writer }}</div>
                     </div>
                     <div class="text-white mb-4">
-                        <div class="font-bold mb-2">Stars:</div>
+                        <div class="font-bold mb-2">Stars</div>
                         <div>{{ movieDetails.Actors }}</div>
                     </div>
                     <button
